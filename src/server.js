@@ -8,6 +8,7 @@
  */
 
 import path from 'path';
+import Promise from 'bluebird';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -18,7 +19,9 @@ import jwt from 'jsonwebtoken';
 import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import { getDataFromTree } from 'react-apollo';
 import PrettyError from 'pretty-error';
+import createApolloClient from './core/createApolloClient';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
@@ -30,6 +33,8 @@ import models from './data/models';
 import schema from './data/schema';
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from './chunk-manifest.json'; // eslint-disable-line import/no-unresolved
+import configureStore from './store/configureStore';
+import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 
 process.on('unhandledRejection', (reason, p) => {
@@ -108,15 +113,15 @@ app.get(
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use(
-  '/graphql',
-  expressGraphQL(req => ({
-    schema,
-    graphiql: __DEV__,
-    rootValue: { request: req },
-    pretty: __DEV__,
-  })),
-);
+// https://github.com/graphql/express-graphql#options
+const graphqlMiddleware = expressGraphQL(req => ({
+  schema,
+  graphiql: __DEV__,
+  rootValue: { request: req },
+  pretty: __DEV__,
+}));
+
+app.use('/graphql', graphqlMiddleware);
 
 //
 // Register server-side rendering middleware
@@ -132,13 +137,37 @@ app.get('*', async (req, res, next) => {
       styles.forEach(style => css.add(style._getCss()));
     };
 
+    const apolloClient = createApolloClient({
+      schema,
+      rootValue: { request: req },
+    });
+
     // Universal HTTP client
     const fetch = createFetch(nodeFetch, {
       baseUrl: config.api.serverUrl,
       cookie: req.headers.cookie,
+      apolloClient,
       schema,
       graphql,
     });
+
+    const initialState = {
+      user: req.user || null,
+    };
+
+    const store = configureStore(initialState, {
+      cookie: req.headers.cookie,
+      fetch,
+      // I should not use `history` on server.. but how I do redirection? follow universal-router
+      history: null,
+    });
+
+    store.dispatch(
+      setRuntimeVariable({
+        name: 'initialNow',
+        value: Date.now(),
+      }),
+    );
 
     // Global (context) variables that can be easily accessed from any React component
     // https://facebook.github.io/react/docs/context.html
@@ -148,6 +177,11 @@ app.get('*', async (req, res, next) => {
       // The twins below are wild, be careful!
       pathname: req.path,
       query: req.query,
+      // You can access redux through react-redux connect
+      store,
+      storeSubscription: null,
+      // Apollo Client for use with react-apollo
+      client: apolloClient,
     };
 
     const route = await router.resolve(context);
@@ -158,9 +192,11 @@ app.get('*', async (req, res, next) => {
     }
 
     const data = { ...route };
-    data.children = ReactDOM.renderToString(
-      <App context={context}>{route.component}</App>,
-    );
+    const rootComponent = <App context={context}>{route.component}</App>;
+    await getDataFromTree(rootComponent);
+    // this is here because of Apollo redux APOLLO_QUERY_STOP action
+    await Promise.delay(0);
+    data.children = await ReactDOM.renderToString(rootComponent);
     data.styles = [{ id: 'css', cssText: [...css].join('') }];
 
     const scripts = new Set();
@@ -174,10 +210,17 @@ app.get('*', async (req, res, next) => {
     addChunk('client');
     if (route.chunk) addChunk(route.chunk);
     if (route.chunks) route.chunks.forEach(addChunk);
-
     data.scripts = Array.from(scripts);
+
+    // Furthermore invoked actions will be ignored, client will not receive them!
+    if (__DEV__) {
+      // eslint-disable-next-line no-console
+      console.log('Serializing store...');
+    }
     data.app = {
       apiUrl: config.api.clientUrl,
+      state: context.store.getState(),
+      apolloState: context.client.extract(),
     };
 
     const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);

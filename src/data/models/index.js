@@ -12,6 +12,8 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
+import Question from './Question';
+import Answer from './Answer';
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -39,4 +41,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile };
+export { User, UserLogin, UserClaim, UserProfile, Question, Answer };
