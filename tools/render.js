@@ -23,6 +23,7 @@ import runServer from './runServer';
 // ];
 const routes = [
   '/',
+  '/survey',
   '/contact',
   '/login',
   '/register',

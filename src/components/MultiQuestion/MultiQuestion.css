@@ -1,0 +1,16 @@
+.multiContainer {
+  display: flex;
+}
+
+.question__option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  margin: 0 5px;
+  border-radius: 35px;
+  background-color: #968883;
+  color: #fff;
+  font-weight: 700;
+}

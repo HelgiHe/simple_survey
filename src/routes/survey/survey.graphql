@@ -1,0 +1,7 @@
+query SurveyQuestion {
+  databaseGetAllQuestions {
+    id
+    question
+    question_type
+  }
+}

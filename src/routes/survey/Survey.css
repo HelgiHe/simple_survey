@@ -1,0 +1,9 @@
+.questionsContainer {
+  padding: 20px 0;
+  max-width: 1000px;
+  margin: 20px;
+}
+
+.questionContainer {
+  display: flex;
+}
