@@ -2,7 +2,7 @@ import React from 'react';
 import Survey from './Survey';
 import Layout from '../../components/Layout';
 
-import questionQuery from './survey.graphql';
+import questionQuery from './survey.queries.graphql';
 
 async function action({ client }) {
   const data = await client.query({

@@ -9,7 +9,7 @@ const Answer = Model.define('Answer', {
   },
 
   question_id: {
-    type: DataType.UUID,
+    type: DataType.STRING(255),
   },
 
   answer_value: {

@@ -1,4 +1,4 @@
-import { User, UserProfile, Question } from 'data/models';
+import { User, UserProfile, Question, Answer } from 'data/models';
 
 export const schema = [
   `
@@ -37,6 +37,11 @@ export const mutation = [
     question: String!
     question_type: String!
     ): DatabaseQuestion
+
+  databaseCreateAnswer(
+    question_id: String!
+    answer_value: String!
+    ): DatabaseAnswer
 `,
 ];
 
@@ -74,6 +79,14 @@ export const resolvers = {
       });
 
       return question;
+    },
+    async databaseCreateAnswer(parent, args) {
+      const answer = await Answer.create({
+        question_id: args.question_id,
+        answer_value: args.answer_value,
+      });
+
+      return answer;
     },
   },
 };

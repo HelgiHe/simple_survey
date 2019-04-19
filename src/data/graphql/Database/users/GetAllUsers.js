@@ -28,6 +28,12 @@ export const schema = [
     question_type: String
   }
 
+  type DatabaseAnswer {
+    id: String
+    question_id: String
+    answer_value: String
+  }
+
   type DatabaseUserClaim {
     id: Int
     type: String

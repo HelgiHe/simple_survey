@@ -24,6 +24,10 @@ const routes = {
       load: () => import(/* webpackChunkName: 'survey' */ './survey'),
     },
     {
+      path: '/success',
+      load: () => import(/* webpackChunkName: 'success' */ './success'),
+    },
+    {
       path: '/contact',
       load: () => import(/* webpackChunkName: 'contact' */ './contact'),
     },
@@ -60,7 +64,7 @@ const routes = {
     const route = await next();
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.sportabler.com`;
+    route.title = `${route.title || 'Untitled Page'} - Sportabler.com`;
     route.description = route.description || '';
 
     return route;

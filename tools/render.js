@@ -24,6 +24,7 @@ import runServer from './runServer';
 const routes = [
   '/',
   '/survey',
+  '/success',
   '/contact',
   '/login',
   '/register',

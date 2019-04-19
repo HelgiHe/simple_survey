@@ -1,0 +1,5 @@
+mutation AnswersMutation($question_id: String, $answer_value: String) {
+  databaseCreateAnswer(question_id: $question_id, answer_value: $answer_value) {
+    id
+  }
+}

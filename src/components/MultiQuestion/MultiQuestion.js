@@ -4,21 +4,29 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './MultiQuestion.css';
 
-const MultiQuestion = ({ question }) => (
+const MultiQuestion = ({ question, onSelect, questionId, options }) => (
   <React.Fragment>
     <h4>{question}</h4>
     <div className={s.multiContainer}>
-      <div className={s.question__option}>1</div>
-      <div className={s.question__option}>2</div>
-      <div className={s.question__option}>3</div>
-      <div className={s.question__option}>4</div>
-      <div className={s.question__option}>5</div>
+      {options.map(value => (
+        <button
+          type="button"
+          key={value}
+          onClick={() => onSelect(value, questionId)}
+          className={s.question__option}
+        >
+          {value}
+        </button>
+      ))}
     </div>
   </React.Fragment>
 );
 
 MultiQuestion.propTypes = {
   question: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  questionId: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default withStyles(s)(MultiQuestion);
