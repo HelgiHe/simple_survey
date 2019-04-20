@@ -13,7 +13,15 @@ import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 import Question from './Question';
+import Option from './Option';
 import Answer from './Answer';
+
+Question.hasMany(Option, {
+  foreignKey: 'questionId',
+  as: 'options',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -41,4 +49,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile, Question, Answer };
+export { User, UserLogin, UserClaim, UserProfile, Question, Answer, Option };

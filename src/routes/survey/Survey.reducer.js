@@ -8,6 +8,8 @@ function reducer(state, action) {
           [action.payload.questionId]: action.payload.value,
         },
       };
+    case 'RESET':
+      return { ...state, answers: {} };
     default:
       return state;
   }

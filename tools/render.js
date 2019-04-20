@@ -25,6 +25,7 @@ const routes = [
   '/',
   '/survey',
   '/success',
+  '/results',
   '/contact',
   '/login',
   '/register',

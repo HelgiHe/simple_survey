@@ -12,7 +12,7 @@ import Model from '../sequelize';
 
 const UserLogin = Model.define('UserLogin', {
   name: {
-    type: DataType.STRING(50),
+    type: DataType.STRING(100),
     primaryKey: true,
   },
 

@@ -3,3 +3,14 @@
   padding: 0 0 40px;
   max-width: var(--max-content-width);
 }
+
+.button {
+  background-color: #61dafb;
+  color: #fff;
+  padding: 10px;
+  margin: 5px 10px 5px 0;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  width: 140px;
+}

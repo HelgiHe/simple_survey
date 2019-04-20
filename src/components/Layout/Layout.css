@@ -185,3 +185,7 @@ textarea {
     page-break-after: avoid;
   }
 }
+
+.content {
+  min-height: 75vh;
+}

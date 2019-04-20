@@ -39,7 +39,6 @@ export const mutation = [
     ): DatabaseQuestion
 
   databaseCreateAnswer(
-    question_id: String!
     answer_value: String!
     ): DatabaseAnswer
 `,
@@ -75,14 +74,13 @@ export const resolvers = {
       // Create new user with profile in database
       const question = await Question.create({
         question: args.question,
-        question_type: args.type,
+        question_type: args.question_type,
       });
 
       return question;
     },
     async databaseCreateAnswer(parent, args) {
       const answer = await Answer.create({
-        question_id: args.question_id,
         answer_value: args.answer_value,
       });
 

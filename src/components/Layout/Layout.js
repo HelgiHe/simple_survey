@@ -15,7 +15,6 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';
-import Feedback from '../Feedback';
 import Footer from '../Footer';
 
 class Layout extends React.Component {
@@ -27,8 +26,7 @@ class Layout extends React.Component {
     return (
       <div>
         <Header />
-        {this.props.children}
-        <Feedback />
+        <div className={s.content}>{this.props.children}</div>
         <Footer />
       </div>
     );

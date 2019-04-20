@@ -1,4 +1,11 @@
-import { User, UserClaim, UserLogin, UserProfile, Question } from 'data/models';
+import {
+  User,
+  UserClaim,
+  UserLogin,
+  UserProfile,
+  Question,
+  Option,
+} from 'data/models';
 
 export const schema = [
   `
@@ -22,10 +29,19 @@ export const schema = [
     userId: String
   }
 
+  type DatabaseQuestionOption {
+    name: String
+    key: String
+    createdAt: String
+    updatedAt: String
+    questionId: String
+  }
+
   type DatabaseQuestion {
     id: String
     question: String
     question_type: String
+    options: [DatabaseQuestionOption]
   }
 
   type DatabaseAnswer {
@@ -84,7 +100,10 @@ export const resolvers = {
       return users;
     },
     async databaseGetAllQuestions() {
-      const question = await Question.findAll();
+      const question = await Question.findAll({
+        include: [{ model: Option, as: 'options' }],
+      });
+
       return question;
     },
     async databaseGetUser(parent, { email }) {

@@ -15,17 +15,21 @@ const routes = {
 
   // Keep in mind, routes are evaluated in order
   children: [
+    // {
+    //   path: '',
+    //   load: () => import(/* webpackChunkName: 'home' */ './home'),
+    // },
     {
-      path: '',
-      load: () => import(/* webpackChunkName: 'home' */ './home'),
-    },
-    {
-      path: '/survey',
+      path: '/',
       load: () => import(/* webpackChunkName: 'survey' */ './survey'),
     },
     {
       path: '/success',
       load: () => import(/* webpackChunkName: 'success' */ './success'),
+    },
+    {
+      path: '/results',
+      load: () => import(/* webpackChunkName: 'results' */ './results'),
     },
     {
       path: '/contact',

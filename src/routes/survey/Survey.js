@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import s from './Survey.css';
 import history from '../../history';
 import TextQuestion from '../../components/TextQuestion/Textquestion';
-import MultiQuestion from '../../components/MultiQuestion/MultiQuestion';
+import RankQuestion from '../../components/RankQuestion/RankQuestion';
 
 import reducer from './Survey.reducer';
 import questionQuery from './survey.queries.graphql';
@@ -14,7 +14,7 @@ import questionQuery from './survey.queries.graphql';
 const Survey = props => {
   const initialState = { answers: {} };
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { answers } = state;
   const {
     data: { loading, databaseGetAllQuestions },
   } = props;
@@ -24,30 +24,32 @@ const Survey = props => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    const { answers } = state;
-    await Object.keys(answers).forEach(id => {
-      props
-        .mutate({
-          variables: {
-            question_id: id,
-            answer_value: answers[id],
-          },
-        })
-        .then(() => {});
-    });
     history.push('/success');
+    const allAnswers = await JSON.stringify(answers);
+
+    props
+      .mutate({
+        variables: {
+          answer_value: allAnswers,
+        },
+      })
+      .then(() => {
+        history.push('/success');
+      })
+      .catch(() => history.push('/error'));
   };
 
   return (
-    <form onSubmit={e => onSubmit(e)}>
+    <form onSubmit={e => onSubmit(e)} className={s.container}>
       <div className={s.questionsContainer}>
         {loading
           ? '...Loading'
-          : databaseGetAllQuestions.map(question => {
+          : databaseGetAllQuestions.map((question, index) => {
               switch (question.question_type) {
                 case 'text':
                   return (
                     <TextQuestion
+                      index={index + 1}
                       key={question.id}
                       questionId={question.id}
                       question={question.question}
@@ -57,13 +59,15 @@ const Survey = props => {
                       }
                     />
                   );
-                case 'multi':
+                case 'rank':
                   return (
-                    <MultiQuestion
+                    <RankQuestion
                       key={question.id}
+                      index={index + 1}
                       question={question.question}
                       questionId={question.id}
-                      options={['1', '2', '3', '4', '5']}
+                      ranks={['1', '2', '3', '4', '5']}
+                      selectedValue={answers[question.id]}
                       onSelect={(value, questionId) =>
                         answerChanged(value, questionId)
                       }
@@ -74,8 +78,14 @@ const Survey = props => {
               }
             })}
       </div>
-      <input type="submit" value="submit" />
-      <button type="button">Reset</button>
+      <input className={s.button} type="submit" value="Submit" />
+      <button
+        className={s.button}
+        type="button"
+        onClick={() => dispatch({ type: 'RESET' })}
+      >
+        Reset
+      </button>
     </form>
   );
 };
@@ -95,11 +105,8 @@ Survey.propTypes = {
 };
 
 const mutation = gql`
-  mutation AnswersMutation($question_id: String!, $answer_value: String!) {
-    databaseCreateAnswer(
-      question_id: $question_id
-      answer_value: $answer_value
-    ) {
+  mutation AnswersMutation($answer_value: String!) {
+    databaseCreateAnswer(answer_value: $answer_value) {
       id
     }
   }
