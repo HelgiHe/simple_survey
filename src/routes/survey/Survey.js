@@ -7,6 +7,7 @@ import s from './Survey.css';
 import history from '../../history';
 import TextQuestion from '../../components/TextQuestion/Textquestion';
 import RankQuestion from '../../components/RankQuestion/RankQuestion';
+import MultiChoiceQuestion from '../../components/MultiChoiceQuestion/MultiChoiceQuestion';
 
 import reducer from './Survey.reducer';
 import questionQuery from './survey.queries.graphql';
@@ -73,19 +74,35 @@ const Survey = props => {
                       }
                     />
                   );
+                case 'multi':
+                  return (
+                    <MultiChoiceQuestion
+                      key={question.id}
+                      index={index + 1}
+                      question={question.question}
+                      questionId={question.id}
+                      options={question.options}
+                      selectedValue={answers[question.id]}
+                      onSelect={(value, questionId) =>
+                        answerChanged(value, questionId)
+                      }
+                    />
+                  );
                 default:
                   return <div />;
               }
             })}
       </div>
-      <input className={s.button} type="submit" value="Submit" />
-      <button
-        className={s.button}
-        type="button"
-        onClick={() => dispatch({ type: 'RESET' })}
-      >
-        Reset
-      </button>
+      <div className={s.buttons__control}>
+        <input className={s.button} type="submit" value="Submit" />
+        <button
+          className={s.button}
+          type="button"
+          onClick={() => dispatch({ type: 'RESET' })}
+        >
+          Reset
+        </button>
+      </div>
     </form>
   );
 };

@@ -24,3 +24,7 @@
   background-color: #61dafb;
   transition: background-color 120ms linear;
 }
+
+.buttons__control {
+  margin-top: 6em;
+}
