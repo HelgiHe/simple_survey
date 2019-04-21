@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from './surveyContext';
 
-class AuthProvider extends React.Component {
+class SurveyProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,8 @@ class AuthProvider extends React.Component {
   }
 }
 
-AuthProvider.propTypes = {
+SurveyProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export default AuthProvider;
+export default SurveyProvider;

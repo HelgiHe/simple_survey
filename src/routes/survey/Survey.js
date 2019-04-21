@@ -25,7 +25,6 @@ const Survey = props => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    history.push('/success');
     const allAnswers = await JSON.stringify(answers);
 
     props
@@ -50,7 +49,7 @@ const Survey = props => {
                 case 'text':
                   return (
                     <TextQuestion
-                      index={index + 1}
+                      index={index}
                       key={question.id}
                       questionId={question.id}
                       question={question.question}
@@ -64,7 +63,7 @@ const Survey = props => {
                   return (
                     <RankQuestion
                       key={question.id}
-                      index={index + 1}
+                      index={index}
                       question={question.question}
                       questionId={question.id}
                       ranks={['1', '2', '3', '4', '5']}
@@ -78,7 +77,7 @@ const Survey = props => {
                   return (
                     <MultiChoiceQuestion
                       key={question.id}
-                      index={index + 1}
+                      index={index}
                       question={question.question}
                       questionId={question.id}
                       options={question.options}

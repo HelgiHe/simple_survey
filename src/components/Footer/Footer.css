@@ -23,24 +23,3 @@
 .text {
   color: #968883;
 }
-
-.spacer {
-  color: #968883;
-}
-
-.text,
-.link {
-  padding: 2px 5px;
-  font-size: 1em;
-}
-
-.link,
-.link:active,
-.link:visited {
-  color: #968883;
-  text-decoration: none;
-}
-
-.link:hover {
-  color: rgba(0, 0, 0, 1);
-}

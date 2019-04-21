@@ -2,30 +2,21 @@ import { merge } from 'lodash';
 
 /** * Queries ** */
 import {
-  schema as GetAllUsers,
-  queries as GetAllUsersQueries,
+  schema as surveySchema,
+  queries as surveyQueries,
   resolvers as GetAllUsersResolver,
-} from './users/GetAllUsers';
-import {
-  queries as GetLoggedInUserQueries,
-  resolvers as GetLoggedInUserResolver,
-} from './users/GetLoggedInUser';
+} from './survey/surveyQueries';
 
 /** * Mutations ** */
 import {
-  schema as CreateUserInput,
-  mutation as CreateUser,
-  resolvers as CreateUserResolver,
-} from './users/CreateUser';
+  mutation,
+  resolvers as mutationResolver,
+} from './survey/surveyMutations';
 
-export const schema = [...GetAllUsers, ...CreateUserInput];
+export const schema = [...surveySchema];
 
-export const queries = [...GetAllUsersQueries, ...GetLoggedInUserQueries];
+export const queries = [...surveyQueries];
 
-export const mutations = [...CreateUser];
+export const mutations = [...mutation];
 
-export const resolvers = merge(
-  GetAllUsersResolver,
-  GetLoggedInUserResolver,
-  CreateUserResolver,
-);
+export const resolvers = merge(GetAllUsersResolver, mutationResolver);

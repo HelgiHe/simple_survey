@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
+import QuestionHeader from '../QuestionHeader/QuestionHeader';
 import s from './MultiChoiceQuestion.css';
 
 const MultiChoiceQuestion = ({
@@ -13,10 +14,7 @@ const MultiChoiceQuestion = ({
   selectedValue,
 }) => (
   <React.Fragment>
-    <div className={s.headerContainer}>
-      <div className={s.numContainer}>{index}</div>
-      <h4 className={s.heading}>{question}</h4>
-    </div>
+    <QuestionHeader index={index} question={question} />
     <div className={s.multiContainer}>
       {options.map(option => (
         <button

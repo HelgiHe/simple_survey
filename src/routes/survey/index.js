@@ -13,7 +13,7 @@ async function action({ client }) {
     chunks: ['survey'],
     component: (
       <Layout>
-        <Survey data={data.databaseGetAllQuestions} />
+        <Survey data={data.data.databaseGetAllQuestions} />
       </Layout>
     ),
   };

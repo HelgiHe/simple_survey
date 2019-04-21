@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
+import QuestionHeader from '../QuestionHeader/QuestionHeader';
 import s from './TextQuestion.css';
 
 const TextQuestion = ({
@@ -12,11 +13,9 @@ const TextQuestion = ({
   value,
 }) => (
   <React.Fragment>
-    <div className={s.headerContainer}>
-      <div className={s.numContainer}>{index}</div>
-      <h4 className={s.heading}>{question}</h4>
-    </div>
+    <QuestionHeader index={index} question={question} />
     <textarea
+      className={s.commentBox}
       value={value}
       onChange={e => onAnswerChange(e.target.value, questionId)}
       rows="4"

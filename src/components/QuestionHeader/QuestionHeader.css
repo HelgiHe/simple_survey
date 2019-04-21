@@ -1,0 +1,23 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+}
+
+.numContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  right: 70px;
+  border-radius: 18px;
+  background-color: var(--main-color);
+  color: #fff;
+  font-weight: 700;
+}
+
+.heading {
+  position: relative;
+  right: 35px;
+}

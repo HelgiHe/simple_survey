@@ -1,16 +1,21 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import Results from './Results';
+import answersQuery from './results.graphql';
 
-const title = 'Survey Completed';
+const title = 'Results';
 
-function action() {
+async function action({ client }) {
+  const data = await client.query({
+    query: answersQuery,
+  });
+
   return {
     chunks: ['results'],
     title,
     component: (
       <Layout>
-        <Results title={title} />
+        <Results title={title} data={data.data} />
       </Layout>
     ),
   };

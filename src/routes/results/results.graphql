@@ -1,5 +1,6 @@
-query SurveyQuestion {
+query SurveyAnswers {
   databaseGetAllAnswers {
+    id
     answer_value
   }
 }
