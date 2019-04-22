@@ -36,7 +36,7 @@ const MultiChoiceQuestion = ({
 
 MultiChoiceQuestion.defaultProps = {
   index: 1,
-  selectedValue: 1,
+  selectedValue: '',
 };
 
 MultiChoiceQuestion.propTypes = {
@@ -45,7 +45,7 @@ MultiChoiceQuestion.propTypes = {
   question: PropTypes.string.isRequired,
   questionId: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectedValue: PropTypes.number,
+  selectedValue: PropTypes.string,
 };
 
 export default withStyles(s)(MultiChoiceQuestion);

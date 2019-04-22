@@ -15,6 +15,7 @@ import UserProfile from './UserProfile';
 import Question from './Question';
 import Option from './Option';
 import Answer from './Answer';
+import QuestionAnswer from './QuestionAnswer';
 
 Question.hasMany(Option, {
   foreignKey: 'questionId',
@@ -22,6 +23,17 @@ Question.hasMany(Option, {
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
+
+Option.belongsTo(Question);
+
+Question.hasMany(QuestionAnswer, {
+  foreignKey: 'questionId',
+  as: 'answers',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
+QuestionAnswer.belongsTo(Question);
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',

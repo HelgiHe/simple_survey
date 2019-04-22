@@ -36,7 +36,7 @@ const RankQuestion = ({
 
 RankQuestion.defaultProps = {
   index: 1,
-  selectedValue: 1,
+  selectedValue: '',
 };
 
 RankQuestion.propTypes = {
@@ -45,7 +45,7 @@ RankQuestion.propTypes = {
   question: PropTypes.string.isRequired,
   questionId: PropTypes.string.isRequired,
   ranks: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedValue: PropTypes.number,
+  selectedValue: PropTypes.string,
 };
 
 export default withStyles(s)(RankQuestion);
