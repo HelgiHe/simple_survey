@@ -9,7 +9,7 @@ export const schema = [
 
   input AnswerInput {
     answer: String!
-    key: String
+    key: String!
   }
 `,
 ];
