@@ -15,7 +15,7 @@ const RankQuestion = ({
 }) => (
   <React.Fragment>
     <QuestionHeader index={index} question={question} />
-    <div className={s.multiContainer}>
+    <div className={s.rankContainer}>
       {ranks.map(value => (
         <button
           type="button"

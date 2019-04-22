@@ -1,9 +1,14 @@
-import { Question, Answer, Option } from 'data/models';
+import { Question, Answer, Option, QuestionAnswer } from 'data/models';
 
 export const schema = [
   `
   input OptionInput {
     name: String!
+    key: String
+  }
+
+  input AnswerInput {
+    answer: String!
     key: String
   }
 `,
@@ -21,6 +26,10 @@ export const mutation = [
     answer_value: String!
     ): DatabaseAnswer
   
+  databaseCreateQuestionAnswer(
+  answers: [AnswerInput]
+  ): DatabaseQuestionAnswer
+
     databaseCreateOption(
     options: [OptionInput]
     ): [DatabaseQuestionOption]
@@ -43,7 +52,7 @@ export const resolvers = {
       return question;
     },
     async databaseCreateOption(parent, args) {
-      const newOptions = args.options.forEach(async option => {
+      const newAnswers = args.options.forEach(async option => {
         Question.findByPk(option.key).then(async question => {
           await Option.create({
             name: option.name,
@@ -54,8 +63,24 @@ export const resolvers = {
         });
       });
 
+      return newAnswers;
+    },
+
+    async databaseCreateQuestionAnswer(parent, args) {
+      const newOptions = args.answers.forEach(async answer => {
+        Question.findByPk(answer.key).then(async question => {
+          await QuestionAnswer.create({
+            answer: answer.answer,
+            key: answer.key,
+          }).then(ans => {
+            question.addAnswers(ans.id);
+          });
+        });
+      });
+
       return newOptions;
     },
+
     async databaseCreateAnswer(parent, args) {
       const answer = await Answer.create({
         answer_value: args.answer_value,

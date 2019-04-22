@@ -33,7 +33,7 @@ Question.hasMany(QuestionAnswer, {
   onDelete: 'cascade',
 });
 
-QuestionAnswer.belongsTo(Question);
+// QuestionAnswer.belongsTo(Question);
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -61,4 +61,13 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile, Question, Answer, Option };
+export {
+  User,
+  UserLogin,
+  UserClaim,
+  UserProfile,
+  Question,
+  Answer,
+  Option,
+  QuestionAnswer,
+};

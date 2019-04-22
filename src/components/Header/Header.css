@@ -14,8 +14,9 @@
 }
 
 .root {
-  background: #4ebedb;
+  background: rgba(0, 0, 0, 0.8);
   color: #fff;
+  margin-bottom: 3em;
 }
 
 .container {
@@ -25,7 +26,6 @@
 }
 
 .brand {
-  color: color(var(--brand-color) lightness(+10%));
   text-decoration: none;
   font-size: 1.75em; /* ~28px */
 }

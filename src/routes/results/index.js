@@ -9,7 +9,6 @@ async function action({ client }) {
   const data = await client.query({
     query: answersQuery,
   });
-
   return {
     chunks: ['results'],
     title,

@@ -1,4 +1,4 @@
-import { Question, Option, Answer } from 'data/models';
+import { Question, Option, Answer, QuestionAnswer } from 'data/models';
 
 export const schema = [
   `
@@ -10,11 +10,17 @@ export const schema = [
     questionId: String
   }
 
+  type DatabaseQuestionAnswer {
+    id: String
+    answer: String
+  }
+
   type DatabaseQuestion {
     id: String
     question: String
     question_type: String
     options: [DatabaseQuestionOption]
+    answers: [DatabaseQuestionAnswer]
   }
 
   type DatabaseAnswer {
@@ -37,7 +43,10 @@ export const resolvers = {
   RootQuery: {
     async databaseGetAllQuestions() {
       const question = await Question.findAll({
-        include: [{ model: Option, as: 'options' }],
+        include: [
+          { model: Option, as: 'options' },
+          { model: QuestionAnswer, as: 'answers' },
+        ],
       });
 
       return question;

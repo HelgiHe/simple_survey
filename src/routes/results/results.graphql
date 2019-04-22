@@ -1,6 +1,11 @@
-query SurveyAnswers {
-  databaseGetAllAnswers {
+query answersQuery {
+  databaseGetAllQuestions {
     id
-    answer_value
+    question
+    question_type
+    answers {
+      id
+      answer
+    }
   }
 }

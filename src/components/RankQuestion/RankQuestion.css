@@ -1,5 +1,7 @@
-.multiContainer {
+.rankContainer {
   display: flex;
+  min-height: 5em;
+  margin-bottom: 1em;
 }
 
 .question__option {

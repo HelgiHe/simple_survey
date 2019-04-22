@@ -1,6 +1,8 @@
 .multiContainer {
   display: flex;
   flex-wrap: wrap;
+  min-height: 5em;
+  margin-bottom: 1em;
 }
 
 .question__option {
@@ -13,7 +15,7 @@
   border-radius: 2px;
   color: rgb(97, 93, 93);
   cursor: pointer;
-  border-bottom: 3px solid #76c3e2;
+  border-bottom: 2px solid #76c3e2;
 }
 
 .question__option:hover {

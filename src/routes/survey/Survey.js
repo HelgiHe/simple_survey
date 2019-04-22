@@ -25,12 +25,15 @@ const Survey = props => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    const allAnswers = await JSON.stringify(answers);
+    const answerArray = Object.keys(answers).map(questionId => ({
+      answer: answers[questionId],
+      key: questionId,
+    }));
 
     props
       .mutate({
         variables: {
-          answer_value: allAnswers,
+          answers: answerArray,
         },
       })
       .then(() => {
@@ -121,8 +124,8 @@ Survey.propTypes = {
 };
 
 const mutation = gql`
-  mutation AnswersMutation($answer_value: String!) {
-    databaseCreateAnswer(answer_value: $answer_value) {
+  mutation AnswersMutation($answers: [AnswerInput]) {
+    databaseCreateQuestionAnswer(answers: $answers) {
       id
     }
   }

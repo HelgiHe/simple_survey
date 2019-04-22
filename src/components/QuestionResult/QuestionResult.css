@@ -1,0 +1,4 @@
+.multiChoiceContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
