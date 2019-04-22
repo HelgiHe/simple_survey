@@ -13,7 +13,7 @@ const Results = props => {
   } = props;
   return (
     <div className={s.container}>
-      <h1>Results</h1>
+      <h1>All Results</h1>
       {loading
         ? '...Loading'
         : databaseGetAllQuestions.map((question, index) => (
