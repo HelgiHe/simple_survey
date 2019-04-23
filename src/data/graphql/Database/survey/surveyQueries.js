@@ -1,4 +1,4 @@
-import { Question, Option, Answer, QuestionAnswer } from 'data/models';
+import { Question, Option, QuestionAnswer } from 'data/models';
 
 export const schema = [
   `
@@ -50,11 +50,6 @@ export const resolvers = {
       });
 
       return question;
-    },
-    async databaseGetAllAnswers() {
-      const answers = await Answer.findAll({});
-
-      return answers;
     },
   },
 };

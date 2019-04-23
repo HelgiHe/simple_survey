@@ -1,4 +1,4 @@
-import { Question, Answer, Option, QuestionAnswer } from 'data/models';
+import { Question, Option, QuestionAnswer } from 'data/models';
 
 export const schema = [
   `
@@ -21,10 +21,6 @@ export const mutation = [
     question_type: String!
     options: [OptionInput]
     ): DatabaseQuestion
-
-  databaseCreateAnswer(
-    answer_value: String!
-    ): DatabaseAnswer
   
   databaseCreateQuestionAnswer(
   answers: [AnswerInput]
@@ -79,14 +75,6 @@ export const resolvers = {
       });
 
       return newOptions;
-    },
-
-    async databaseCreateAnswer(parent, args) {
-      const answer = await Answer.create({
-        answer_value: args.answer_value,
-      });
-
-      return answer;
     },
   },
 };

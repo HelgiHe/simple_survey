@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import QuestionHeader from '../QuestionHeader/QuestionHeader';
 import MultiChoiceResults from '../MultiChoiceResults/MultiChoiceResults';
-import s from './QuestionResult.css';
+import s from './SurveyResult.css';
 
 const QuestionResult = ({ answers, index, question, type }) => (
   <div>

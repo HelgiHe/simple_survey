@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 
-import QuestionResult from '../../components/QuestionResult/QuestionResult';
+import SurveyResult from '../../components/SurveyResult/SurveyResult';
 import answersQuery from './results.graphql';
 import s from './Results.css';
 
@@ -17,7 +17,7 @@ const Results = props => {
       {loading
         ? '...Loading'
         : databaseGetAllQuestions.map((question, index) => (
-            <QuestionResult
+            <SurveyResult
               key={question.id}
               answers={question.answers || []}
               index={index}
