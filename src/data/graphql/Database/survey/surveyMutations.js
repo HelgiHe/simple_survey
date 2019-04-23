@@ -47,6 +47,7 @@ export const resolvers = {
       );
       return question;
     },
+
     async databaseCreateOption(parent, args) {
       const newAnswers = args.options.forEach(async option => {
         Question.findByPk(option.key).then(async question => {
